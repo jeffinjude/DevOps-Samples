@@ -1,0 +1,14 @@
+Configuring Puppet Master (ubuntu) and agent (ubuntu):
+1)Ensure that port 8140 is open on both aws instances and Add ip address of agent in master's host file (Eg "54.183.182.91 puppetagent1.puppetsample.org") and ip address of master in agent's host file (Eg "52.53.170.93 puppetmaster.puppetsample.org")
+2)use 'sudo su' to become root and run 'apt-get update' on master and agent
+3)On master run 'apt-get install puppetmaster' and on agent run 'apt-get install puppet'
+4)Edit the puppet config files:
+	Agent:
+	3.1)nano /etc/puppet/puppet.conf
+	3.2)Add the line 'server=puppetmaster.puppetsample.org' under the [main] block
+5)Run ' puppet agent --no-daemonize --onetime --verbose' on agent
+6)The agent will send a certificate to the master, to view the certificate run 'puppet cert list' on the master
+7)Now sign the certficate by running 'puppet cert sign <certficate_name>' on the master
+8)Run 'puppet cert list -all' on master and ensure that the server certificate name of master and the server name given in the puppet config of agent are same. Also this should be the name given in agent's host file mapping the server's ip.
+9)Run 'puppet agent --enable' and Rerun 'puppet agent --no-daemonize --onetime --verbose' on agent.
+10)The puppet config files are created in '/etc/puppet/manifests/' location with '.pp' extension

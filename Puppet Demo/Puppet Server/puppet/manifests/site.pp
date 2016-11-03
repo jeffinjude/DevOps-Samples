@@ -7,7 +7,7 @@ class toolbox {
 	}
 }
 
-node 'puppetagent.example.org' {
+node 'puppetagent1.us-west-1.compute.internal' {
 	include toolbox
-	include apache
+	include mysite
 }
